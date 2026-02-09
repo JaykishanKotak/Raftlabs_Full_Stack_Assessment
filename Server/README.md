@@ -1,6 +1,6 @@
-# Node.js + TypeScript + Express + MongoDB Server
+# Food Delivery Application - Backend
 
-A scalable REST API server built with Node.js, TypeScript, Express, and MongoDB featuring authentication with JWT.
+A scalable Food Delivery Application API server built with Node.js, TypeScript, Express, and MongoDB featuring authentication with JWT.
 
 ## 📁 Project Structure
 
