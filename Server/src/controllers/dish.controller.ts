@@ -23,7 +23,11 @@ export const getDishById = async (
   next: NextFunction,
 ) => {
   try {
-    const result = await DishService.getDishById(req.params.id);
+    const { restaurantId, dishId } = req.query;
+    const result = await DishService.getDishById(
+      String(restaurantId),
+      String(dishId),
+    );
     return res
       .status(200)
       .json(

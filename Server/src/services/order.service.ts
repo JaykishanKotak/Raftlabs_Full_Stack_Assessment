@@ -10,9 +10,17 @@ export class OrderService {
     orderData: {
       restaurant: string;
       items: { menuItemId: string; quantity: number }[];
+      deliveryDetails: {
+        state: string;
+        city: string;
+        address: string;
+        pinCode: string;
+        phoneNumber?: string;
+        name: string;
+      };
     },
   ) {
-    const { restaurant, items } = orderData;
+    const { restaurant, items, deliveryDetails } = orderData;
 
     if (!items || items.length === 0) {
       throw new ApiError(400, 'Order must contain at least one item');
@@ -62,6 +70,7 @@ export class OrderService {
 
     const order = await Order.create({
       restaurant,
+      deliveryDetails,
       customer: userId,
       items: orderItems,
       totalAmount,

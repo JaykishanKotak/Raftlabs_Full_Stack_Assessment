@@ -28,7 +28,8 @@ export const useDishDetails = () => {
 
     startScreenLoader();
     try {
-      const { dish }: any = await getDishById(dishId);
+      const { dish, price }: any = await getDishById(restaurantId, dishId);
+      dish.price = price;
       setDish(dish);
     } catch (error) {
       console.error('Failed to fetch dish details:', error);

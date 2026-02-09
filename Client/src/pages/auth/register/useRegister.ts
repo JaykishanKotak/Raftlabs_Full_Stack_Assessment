@@ -41,7 +41,6 @@ export function useRegister() {
     startScreenLoader();
     try {
       const data = await getCityList();
-      console.log('city list', data);
       const mappedCities: { value: string; label: string }[] = data.map(
         (city: string) => ({
           value: city,

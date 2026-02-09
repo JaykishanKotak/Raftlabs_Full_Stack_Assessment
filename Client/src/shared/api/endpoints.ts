@@ -19,6 +19,7 @@ const API_ENDPOINTS = {
     BEST_SELLERS: '/dishes/best-sellers',
     TOP_RATED: '/dishes/top-rated',
     BY_ID: (id: string) => `/dishes/${id}`,
+    DISH_DETAILS: '/dishes/details',
   },
   ORDERS: {
     CREATE: '/orders',

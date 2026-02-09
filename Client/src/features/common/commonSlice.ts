@@ -27,8 +27,16 @@ const commonSlice = createSlice({
     setSelectedCity(state, action: PayloadAction<string>) {
       state.selectedCity = action.payload;
     },
+    clearCommonState(state) {
+      state.cityList = {
+        isDataFetch: false,
+        data: [],
+      };
+      state.selectedCity = '';
+    },
   },
 });
 
-export const { setCityListData, setSelectedCity } = commonSlice.actions;
+export const { setCityListData, setSelectedCity, clearCommonState } =
+  commonSlice.actions;
 export const commonReducer = commonSlice.reducer;

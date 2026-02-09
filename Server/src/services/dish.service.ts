@@ -65,19 +65,32 @@ export class DishService {
     };
   }
 
-  static async getDishById(id: string) {
-    const dish = await Dish.findById(id);
-    if (!dish) {
-      throw new ApiError(404, 'Dish not found');
+  static async getDishById(restaurantId: string, dishId: string) {
+    const menu = await Menu.findOne({
+      restaurant: restaurantId,
+      dish: dishId,
+    })
+      .select('price isAvailable restaurant dish')
+      .populate(
+        'dish',
+        'name baseDescription foodType baseIngredients imageUrl averageRating ratingCount',
+      )
+      .populate('restaurant', 'name city address state averageRating');
+
+    if (!menu) {
+      throw new ApiError(404, 'Menu or dish not found');
     }
 
-    // Also get restaurants serving this dish
-    const menus = await Menu.find({ dish: id })
-      .populate('restaurant', 'name city state averageRating')
-      .select('restaurant price isAvailable');
+    // Find all restaurants serving this dish
+    const menus = await Menu.find({ dish: dishId })
+      .select('price isAvailable restaurant')
+      .populate('restaurant', 'name city state averageRating');
 
     return {
-      dish,
+      dish: menu.dish,
+      price: menu.price,
+      isAvailable: menu.isAvailable,
+      restaurant: menu.restaurant,
       availableAt: menus,
     };
   }

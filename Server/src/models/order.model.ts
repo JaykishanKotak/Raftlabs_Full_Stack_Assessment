@@ -13,6 +13,34 @@ const orderSchema = new Schema<IOrder>(
       ref: 'User',
       required: [true, 'Order must be associated with a customer'],
     },
+    deliveryDetails: {
+      state: {
+        type: String,
+        required: [true, 'State is required for delivery address'],
+      },
+      phoneNumber: {
+        type: String,
+        required: false,
+        match: [/^\d{10}$/, 'Please provide a valid 10-digit phone number'],
+      },
+      name: {
+        type: String,
+        required: [true, 'Recipient name is required for delivery address'],
+      },
+      city: {
+        type: String,
+        required: [true, 'City is required for delivery address'],
+      },
+      address: {
+        type: String,
+        required: [true, 'Address line is required for delivery address'],
+      },
+      pinCode: {
+        type: String,
+        required: [true, 'Pin code is required for delivery address'],
+        match: [/^\d{6}$/, 'Please provide a valid 6-digit pin code'],
+      },
+    },
     items: [
       {
         menuItemId: {

@@ -5,10 +5,12 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
+  isError?: boolean;
+  errorMessage?: string;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
-  { className, type = 'text', label, ...rest },
+  { className, type = 'text', label, isError, errorMessage, ...rest },
   ref,
 ) {
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +32,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           ref={ref}
           type={isPassword ? (showPassword ? 'text' : 'password') : type}
           className={cn(
-            'h-10 w-full rounded-md border border-slate-300 px-3 pr-10 text-sm outline-none focus:border-brand-500 focus:ring-4 focus:ring-brand-100',
+            'h-10 w-full rounded-md border px-3 pr-10 text-sm outline-none focus:ring-4',
+            isError
+              ? 'border-red-500 focus:border-red-500 focus:ring-red-100'
+              : 'border-slate-300 focus:border-brand-500 focus:ring-brand-100',
             className,
           )}
           {...rest}
@@ -50,6 +55,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           </button>
         )}
       </div>
+      {errorMessage && (
+        <span className="mt-1 text-sm text-red-500">{errorMessage}</span>
+      )}
     </div>
   );
 });

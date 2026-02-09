@@ -9,7 +9,7 @@ import {
 } from '@/shared/utils/loaderControl';
 import { loginSucceeded } from '@/features/auth/authSlice';
 import { ROUTE_CONST } from '@/utils/const';
-import { useAppDispatch } from '@/app/hooks';
+import { useDispatch } from 'react-redux';
 
 const initialValues = {
   email: '',
@@ -18,17 +18,16 @@ const initialValues = {
 
 export function useLogin() {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
 
   const form = useForm<LoginFormData>({
-    resolver: yupResolver<any>(loginSchema),
+    resolver: yupResolver(loginSchema as any),
     defaultValues: initialValues,
     mode: 'onBlur',
   });
 
   const onSubmit = async (data: LoginFormData) => {
     startScreenLoader();
-
     try {
       const response = await login(data);
       dispatch(

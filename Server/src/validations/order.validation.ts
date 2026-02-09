@@ -11,6 +11,24 @@ const objectIdSchema = yup
 export const createOrderSchema = {
   body: yup.object({
     restaurant: objectIdSchema.required('Restaurant ID is required'),
+    deliveryDetails: yup.object({
+      state: yup.string().required('State is required for delivery address'),
+      city: yup.string().required('City is required for delivery address'),
+      address: yup
+        .string()
+        .required('Address line is required for delivery address'),
+      pinCode: yup
+        .string()
+        .required('Pin code is required for delivery address')
+        .matches(/^\d{6}$/, 'Please provide a valid 6-digit pin code'),
+      phoneNumber: yup
+        .string()
+        .notRequired()
+        .matches(/^\d{10}$/, 'Please provide a valid 10-digit phone number'),
+      name: yup
+        .string()
+        .required('Recipient name is required for delivery address'),
+    }),
     items: yup
       .array()
       .of(

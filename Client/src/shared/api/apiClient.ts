@@ -4,12 +4,11 @@ import type { AxiosError, AxiosInstance } from 'axios';
 import type { Store } from '@reduxjs/toolkit';
 
 import { API_CONFIG } from './config';
-import type { RootState } from '@/app/store';
 import type { ApiError } from './types';
 
-let store: Store<RootState> | null = null;
+let store: Store<any> | null = null;
 
-export const setApiStore = (s: Store<RootState>) => {
+export const setApiStore = (s: Store<any>) => {
   store = s;
 };
 
@@ -48,11 +47,6 @@ const toApiError = (error: AxiosError): ApiError => {
   };
 };
 
-/* =========================
-   Interceptors
-========================= */
-
-// Request
 apiClient.interceptors.request.use((config: any) => {
   const token = getToken();
 

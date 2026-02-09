@@ -147,14 +147,11 @@ const Register = () => {
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-100'
                       : ''
                   }
+                  errorMessage={errors.confirmPassword?.message}
                 />
               )}
             />
-            {errors.confirmPassword && (
-              <p className="text-xs text-red-600" role="alert">
-                {errors.confirmPassword.message}
-              </p>
-            )}
+
           </div>
 
           <div className="space-y-1">
@@ -180,14 +177,10 @@ const Register = () => {
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-100'
                       : ''
                   }
+                  errorMessage={errors.phoneNumber?.message}
                 />
               )}
             />
-            {errors.phoneNumber && (
-              <p className="text-xs text-red-600" role="alert">
-                {errors.phoneNumber.message}
-              </p>
-            )}
           </div>
 
           <div className="space-y-1">
@@ -213,14 +206,10 @@ const Register = () => {
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-100'
                       : ''
                   }
+                  errorMessage={errors.address?.message}
                 />
               )}
             />
-            {errors.address && (
-              <p className="text-xs text-red-600" role="alert">
-                {errors.address.message}
-              </p>
-            )}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -233,6 +222,7 @@ const Register = () => {
                     {...field}
                     id="city"
                     label="City"
+                    isError={!!errors.city}
                     options={cityList}
                     placeholder="Select a city"
                     aria-invalid={errors.city ? 'true' : 'false'}
@@ -241,14 +231,10 @@ const Register = () => {
                         ? 'border-red-500 focus:border-red-500 focus:ring-red-100'
                         : ''
                     }
+                    errorMessage={errors.city?.message}
                   />
                 )}
               />
-              {errors.city && (
-                <p className="text-xs text-red-600" role="alert">
-                  {errors.city.message}
-                </p>
-              )}
             </div>
 
             <div className="space-y-1">
@@ -274,14 +260,10 @@ const Register = () => {
                         ? 'border-red-500 focus:border-red-500 focus:ring-red-100'
                         : ''
                     }
+                    errorMessage={errors.state?.message}
                   />
                 )}
               />
-              {errors.state && (
-                <p className="text-xs text-red-600" role="alert">
-                  {errors.state.message}
-                </p>
-              )}
             </div>
           </div>
 
@@ -308,14 +290,10 @@ const Register = () => {
                       ? 'border-red-500 focus:border-red-500 focus:ring-red-100'
                       : ''
                   }
+                  errorMessage={errors.pinCode?.message}
                 />
               )}
             />
-            {errors.pinCode && (
-              <p className="text-xs text-red-600" role="alert">
-                {errors.pinCode.message}
-              </p>
-            )}
           </div>
 
           <Button type="submit" fullWidth disabled={isSubmitting}>

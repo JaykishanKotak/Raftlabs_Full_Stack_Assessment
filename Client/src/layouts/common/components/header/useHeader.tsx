@@ -1,4 +1,6 @@
 import { logout } from '@/features/auth/authSlice';
+import { clearCart } from '@/features/cart/cartSlice';
+import { clearCommonState } from '@/features/common/commonSlice';
 import {
   startScreenLoader,
   stopScreenLoader,
@@ -14,7 +16,9 @@ export function useHeader() {
   const onClickLogout = async () => {
     startScreenLoader();
     try {
+      dispatch(clearCommonState());
       dispatch(logout());
+      dispatch(clearCart());
       toast.success('Successfully logged out');
     } catch (error) {
       console.log('error', error);

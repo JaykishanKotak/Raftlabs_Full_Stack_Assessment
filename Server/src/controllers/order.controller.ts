@@ -14,10 +14,12 @@ export const createOrder = async (
       throw new ApiError(401, 'User not authenticated');
     }
 
-    const { restaurant, items } = req.body;
+    const { restaurant, items, deliveryDetails } = req.body;
+
     const order = await OrderService.createOrder(String(req.user._id), {
       restaurant,
       items,
+      deliveryDetails,
     });
 
     return res

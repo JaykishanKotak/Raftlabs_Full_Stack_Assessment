@@ -29,21 +29,21 @@ const cartSlice = createSlice({
     ) {
       const { dish, quantity, restaurantId } = action.payload;
       const rId = restaurantId ? String(restaurantId) : null;
+      const dishId = dish._id ?? dish.id;
 
-      // If cart is not empty and dish is from a different restaurant
+      // Different restaurant → reset cart
       if (
         state.items.length > 0 &&
         state.restaurantId &&
         state.restaurantId !== rId
       ) {
-        // Clear cart and add new item from the new restaurant
         state.items = [{ ...dish, quantity }];
         state.restaurantId = rId;
         return;
       }
 
       const existingItem = state.items.find(
-        (item) => item._id === dish._id || item.id === dish.id,
+        (item) => (item._id ?? item.id) === dishId,
       );
 
       if (existingItem) {
@@ -52,27 +52,22 @@ const cartSlice = createSlice({
         state.items.push({ ...dish, quantity });
       }
 
-      if (!state.restaurantId) {
-        state.restaurantId = rId;
-      }
+      state.restaurantId = rId;
     },
     updateQuantity(
       state,
       action: PayloadAction<{ dishId: string; quantity: number }>,
     ) {
-      const item = state.items.find(
-        (item) =>
-          item._id === action.payload.dishId ||
-          item.id === action.payload.dishId,
-      );
-      if (item) {
-        item.quantity = action.payload.quantity;
-        if (item.quantity <= 0) {
-          state.items = state.items.filter(
-            (i) =>
-              i._id !== action.payload.dishId && i.id !== action.payload.dishId,
-          );
-        }
+      const { dishId, quantity } = action.payload;
+
+      const item = state.items.find((item) => (item._id ?? item.id) === dishId);
+
+      if (!item) return;
+
+      item.quantity = quantity;
+
+      if (item.quantity <= 0) {
+        state.items = state.items.filter((i) => (i._id ?? i.id) !== dishId);
       }
 
       if (state.items.length === 0) {
@@ -80,9 +75,12 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart(state, action: PayloadAction<string>) {
+      const dishId = action.payload;
+
       state.items = state.items.filter(
-        (item) => item._id !== action.payload && item.id !== action.payload,
+        (item) => (item._id ?? item.id) !== dishId,
       );
+
       if (state.items.length === 0) {
         state.restaurantId = null;
       }

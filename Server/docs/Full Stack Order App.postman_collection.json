@@ -1,0 +1,538 @@
+{
+  "info": {
+    "_postman_id": "2cf57ab9-cfb1-4fe8-9f96-ab7e871b76f8",
+    "name": "Full Stack Order App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "23569739"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Ensure the request succeeded\r",
+                  "pm.test(\"Login response status is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "// Parse JSON response\r",
+                  "let jsonData;\r",
+                  "try {\r",
+                  "    jsonData = pm.response.json();\r",
+                  "} catch (e) {\r",
+                  "    pm.test(\"Response body is valid JSON\", function () {\r",
+                  "        throw new Error(\"Response is not valid JSON\");\r",
+                  "    });\r",
+                  "}\r",
+                  "\r",
+                  "// Read token from response.data.accessToken\r",
+                  "const token = jsonData && jsonData.data && jsonData.data.accessToken;\r",
+                  "\r",
+                  "// Validate token presence and type\r",
+                  "pm.test(\"Login response contains accessToken\", function () {\r",
+                  "    pm.expect(token, \"accessToken should be present\")\r",
+                  "        .to.be.a(\"string\")\r",
+                  "        .that.is.not.empty;\r",
+                  "});\r",
+                  "\r",
+                  "// Save token into active environment as ACCESS_TOKEN\r",
+                  "if (token) {\r",
+                  "    pm.environment.set(\"ACCESS_TOKEN\", token);\r",
+                  "    pm.test(\"ACCESS_TOKEN environment variable set\", function () {\r",
+                  "        pm.expect(pm.environment.get(\"ACCESS_TOKEN\")).to.eql(token);\r",
+                  "    });\r",
+                  "}"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "",
+                "value": "{{ACCESS_TOKEN}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"password\": \"Test@123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/login",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"test@example.com\",\r\n    \"password\": \"Test@123\",\r\n    \"name\": \"John Doe\",\r\n    \"phoneNumber\": \"9800089000\",\r\n    \"address\": \"Test Address\",\r\n    \"city\": \"Mumbai\",\r\n    \"state\": \"Maharashtra\",\r\n    \"pinCode\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/auth/register",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Common",
+      "item": [
+        {
+          "name": "Get Cities List",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"test2@example.com\",\r\n    \"password\": \"Test@123\"\r\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/common/cities",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "common",
+                "cities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get State List",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"test2@example.com\",\r\n    \"password\": \"Test@123\"\r\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/common/states",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "common",
+                "states"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Restaurants",
+      "item": [
+        {
+          "name": "Get Restaurants List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/restaurants?city=surat&page=1&limit=100&foodTypes=VEG",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "restaurants"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "surat"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "100"
+                },
+                {
+                  "key": "foodTypes",
+                  "value": "VEG"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Popular Restaurants List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/restaurants/popular?city=surat&page=1&limit=3",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "restaurants",
+                "popular"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "surat"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Top Rated Restaurants List",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/restaurants/top-rated?city=surat&page=1&limit=3",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "restaurants",
+                "top-rated"
+              ],
+              "query": [
+                {
+                  "key": "city",
+                  "value": "surat"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "3"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Restaurants By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/restaurants/698840d0bb22da34e2614694",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "restaurants",
+                "698840d0bb22da34e2614694"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Restaurant Dishes By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/restaurants/698840d0bb22da34e2614694/dishes",
+              "host": [
+                "{{BASE_URL}}"
+              ],
+              "path": [
+                "restaurants",
+                "698840d0bb22da34e2614694",
+                "dishes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Menu",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "My Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.7"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODg5NzA4ZjA4YjNhOTU4NDFlNjlmYyIsImlhdCI6MTc3MDY0ODgyNSwiZXhwIjoxNzcxMjUzNjI1fQ.zTi9gZ48Z6o2xDwy_YSQV9zSq3bmlNod7QdF2gjUAR8"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/orders/my-orders?page=1&limit=5&_t=1770648832587",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "orders",
+                "my-orders"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                },
+                {
+                  "key": "_t",
+                  "value": "1770648832587"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "My Order Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json, text/plain, */*"
+              },
+              {
+                "key": "Accept-Language",
+                "value": "en-US,en;q=0.7"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5ODg5NzA4ZjA4YjNhOTU4NDFlNjlmYyIsImlhdCI6MTc3MDY0ODgyNSwiZXhwIjoxNzcxMjUzNjI1fQ.zTi9gZ48Z6o2xDwy_YSQV9zSq3bmlNod7QdF2gjUAR8"
+              },
+              {
+                "key": "Connection",
+                "value": "keep-alive"
+              },
+              {
+                "key": "Origin",
+                "value": "http://localhost:5173"
+              },
+              {
+                "key": "Referer",
+                "value": "http://localhost:5173/"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/orders/6988d169d87beeb328df7e9d",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "orders",
+                "6988d169d87beeb328df7e9d"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Seed Data",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"email\": \"test2@example.com\",\r\n    \"password\": \"Test@123\"\r\n}"
+        },
+        "url": {
+          "raw": "{{SEED_URL}}",
+          "host": [
+            "{{SEED_URL}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": ""
+    },
+    {
+      "key": "ACCESS_TOKEN",
+      "value": ""
+    },
+    {
+      "key": "SEED_URL",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}

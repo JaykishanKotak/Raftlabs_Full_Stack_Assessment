@@ -32,9 +32,30 @@ export interface OrderItem {
   _id: string;
   id: string;
   dishId: string;
-  dishName: string;
+  name: string;
   quantity: number;
   price: number;
+}
+
+export interface OrderStatusHistory {
+  _id: string;
+  id: string;
+  orderId: string;
+  status: string;
+  updatedAt: string;
+}
+
+export interface restaurant {
+  _id: string;
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+  pinCode: string;
+  description: string;
+  address: string;
+  rating: number;
+  imageUrl?: string;
 }
 
 export interface Order {
@@ -42,9 +63,19 @@ export interface Order {
   id: string;
   userId: string;
   restaurantId: string;
+  deliveryDetails?: {
+    state?: string;
+    city?: string;
+    address?: string;
+    pinCode?: string;
+    phoneNumber?: string;
+    name?: string;
+  };
   restaurantName: string;
   status: 'pending' | 'preparing' | 'on-the-way' | 'delivered' | 'cancelled';
-  totalPrice: number;
+  totalAmount: number;
+  restaurant?: restaurant;
   items: OrderItem[];
   createdAt: string;
+  statusHistory?: OrderStatusHistory[];
 }

@@ -23,6 +23,14 @@ export interface IOrder extends Document {
     quantity: number;
   }[];
   totalAmount: number;
+  deliveryDetails: {
+    state: string;
+    city: string;
+    address: string;
+    pinCode: string;
+    phoneNumber?: string;
+    name: string;
+  };
   status:
     | 'ORDER_RECEIVED'
     | 'PREPARING'

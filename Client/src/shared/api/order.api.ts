@@ -19,6 +19,14 @@ export const createOrder = async (orderData: {
     phone?: string;
     email?: string;
   };
+  deliveryDetails: {
+    state?: string;
+    city?: string;
+    address?: string;
+    pinCode?: string;
+    phoneNumber?: string;
+    name?: string;
+  };
 }): Promise<Order> => {
   try {
     const response = await apiClient.post<ApiResponse<Order>>(
