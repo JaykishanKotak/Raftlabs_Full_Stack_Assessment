@@ -156,7 +156,6 @@ const Cart = () => {
                     name="address"
                     render={({ field }) => (
                       <Input
-
                         {...field}
                         label="Delivery Address"
                         required
@@ -217,10 +216,12 @@ const Cart = () => {
                     render={({ field }) => (
                       <Dropdown
                         {...field}
-                        options={cityList?.map((city: string) => ({
-                          value: city,
-                          label: city,
-                        })) || []}
+                        options={
+                          cityList?.map((city: string) => ({
+                            value: city,
+                            label: city,
+                          })) || []
+                        }
                         label="City"
                         required
                         value={field.value}
@@ -267,7 +268,9 @@ const Cart = () => {
                 <span className="text-slate-600">Delivery Fee</span>
                 <span className="font-medium">${deliveryFee?.toFixed(2)}</span>
               </div>
-              {subtotal < 350 && <span className='text-red-600'> Free Delivery above $350</span>}
+              {subtotal < 350 && (
+                <span className="text-red-600"> Free Delivery above $350</span>
+              )}
 
               <div className="border-t pt-4 flex justify-between">
                 <span className="font-bold text-slate-900">Total</span>

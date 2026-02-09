@@ -2,10 +2,11 @@ import {
   startScreenLoader,
   stopScreenLoader,
 } from '@/shared/utils/loaderControl';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import type { Restaurant } from '@/shared/types';
 import { getRestaurants } from '@/shared/api/restaurant.api';
 import { useSelector } from 'react-redux';
+import debounce from 'lodash/debounce';
 
 export const useDashboard = () => {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
@@ -30,28 +31,44 @@ export const useDashboard = () => {
     limit: 5,
   });
 
-  const fetchRestaurants = useCallback(async () => {
-    startScreenLoader();
-    try {
-      const payload: any = {
-        city: selectedCity,
-        ...filters,
-      };
-      const { restaurants, pagination }: any = await getRestaurants(payload);
-      setRestaurants(restaurants);
-      if (pagination) {
-        setPagination(pagination);
+  const fetchRestaurants = useCallback(
+    async (filtersPayload = filters) => {
+      startScreenLoader();
+      try {
+        const payload: any = {
+          city: selectedCity,
+          ...filtersPayload,
+        };
+
+        const { restaurants, pagination }: any = await getRestaurants(payload);
+        setRestaurants(restaurants);
+        if (pagination) {
+          setPagination(pagination);
+        }
+      } catch (error) {
+        console.error('Failed to fetch restaurants:', error);
+      } finally {
+        stopScreenLoader();
       }
-    } catch (error) {
-      console.error('Failed to fetch restaurants:', error);
-    } finally {
-      stopScreenLoader();
-    }
-  }, [selectedCity, filters]);
+    },
+    [selectedCity, filters],
+  );
+
+  const debouncedFetchRef = useRef(
+    debounce((nextFilters) => {
+      fetchRestaurants(nextFilters);
+    }, 500),
+  );
+
+  useEffect(() => {
+    return () => {
+      debouncedFetchRef.current.cancel();
+    };
+  }, []);
 
   useEffect(() => {
     fetchRestaurants();
-  }, [fetchRestaurants]);
+  }, [selectedCity, filters.page, filters.foodTypes, filters.limit]);
 
   const handlePageChange = (page: number) => {
     setFilters((prev) => ({ ...prev, page }));
@@ -62,20 +79,25 @@ export const useDashboard = () => {
       const newTypes = prev.foodTypes.includes(type)
         ? prev.foodTypes.filter((t) => t !== type)
         : [...prev.foodTypes, type];
+
       return { ...prev, foodTypes: newTypes, page: 1 };
     });
   };
 
   const handleSearchChange = (search: string) => {
-    setFilters((prev) => ({ ...prev, search, page: 1 }));
+    setFilters((prev) => {
+      const nextFilters = { ...prev, search, page: 1 };
+      debouncedFetchRef.current(nextFilters);
+      return nextFilters;
+    });
   };
 
   return {
     restaurants,
     pagination,
-    handlePageChange,
     filters,
     setFilters,
+    handlePageChange,
     handleToggleFoodType,
     handleSearchChange,
   };

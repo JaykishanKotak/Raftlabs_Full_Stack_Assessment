@@ -151,7 +151,6 @@ const Register = () => {
                 />
               )}
             />
-
           </div>
 
           <div className="space-y-1">

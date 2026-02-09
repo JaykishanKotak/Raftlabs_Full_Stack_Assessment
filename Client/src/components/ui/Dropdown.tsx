@@ -8,11 +8,13 @@ export type DropdownProps = SelectHTMLAttributes<HTMLSelectElement> & {
   placeholder?: string;
   errorMessage?: string;
   isError?: boolean;
-
 };
 
 export const Dropdown = forwardRef<HTMLSelectElement, DropdownProps>(
-  function Dropdown({ className, label, options, placeholder, isError, errorMessage, ...rest }, ref) {
+  function Dropdown(
+    { className, label, options, placeholder, isError, errorMessage, ...rest },
+    ref,
+  ) {
     return (
       <div className="flex flex-col w-full">
         {label && (
