@@ -57,9 +57,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript",
                 "packages": {},
                 "requests": {}
@@ -86,13 +84,8 @@
             },
             "url": {
               "raw": "{{BASE_URL}}/auth/login",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "auth",
-                "login"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "login"]
             }
           },
           "response": []
@@ -103,9 +96,7 @@
             {
               "listen": "prerequest",
               "script": {
-                "exec": [
-                  ""
-                ],
+                "exec": [""],
                 "type": "text/javascript",
                 "packages": {},
                 "requests": {}
@@ -126,13 +117,8 @@
             },
             "url": {
               "raw": "{{BASE_URL}}/auth/register",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "auth",
-                "register"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["auth", "register"]
             }
           },
           "response": []
@@ -156,13 +142,8 @@
             },
             "url": {
               "raw": "{{BASE_URL}}/common/cities",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "common",
-                "cities"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["common", "cities"]
             }
           },
           "response": []
@@ -181,13 +162,8 @@
             },
             "url": {
               "raw": "{{BASE_URL}}/common/states",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "common",
-                "states"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["common", "states"]
             }
           },
           "response": []
@@ -204,12 +180,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/restaurants?city=surat&page=1&limit=100&foodTypes=VEG",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "restaurants"
-              ],
+              "host": ["{{BASE_URL}}"],
+              "path": ["restaurants"],
               "query": [
                 {
                   "key": "city",
@@ -239,13 +211,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/restaurants/popular?city=surat&page=1&limit=3",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "restaurants",
-                "popular"
-              ],
+              "host": ["{{BASE_URL}}"],
+              "path": ["restaurants", "popular"],
               "query": [
                 {
                   "key": "city",
@@ -271,13 +238,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/restaurants/top-rated?city=surat&page=1&limit=3",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "restaurants",
-                "top-rated"
-              ],
+              "host": ["{{BASE_URL}}"],
+              "path": ["restaurants", "top-rated"],
               "query": [
                 {
                   "key": "city",
@@ -303,13 +265,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/restaurants/698840d0bb22da34e2614694",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "restaurants",
-                "698840d0bb22da34e2614694"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["restaurants", "698840d0bb22da34e2614694"]
             }
           },
           "response": []
@@ -321,14 +278,8 @@
             "header": [],
             "url": {
               "raw": "{{BASE_URL}}/restaurants/698840d0bb22da34e2614694/dishes",
-              "host": [
-                "{{BASE_URL}}"
-              ],
-              "path": [
-                "restaurants",
-                "698840d0bb22da34e2614694",
-                "dishes"
-              ]
+              "host": ["{{BASE_URL}}"],
+              "path": ["restaurants", "698840d0bb22da34e2614694", "dishes"]
             }
           },
           "response": []
@@ -384,15 +335,9 @@
             "url": {
               "raw": "http://localhost:5000/api/orders/my-orders?page=1&limit=5&_t=1770648832587",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "5000",
-              "path": [
-                "api",
-                "orders",
-                "my-orders"
-              ],
+              "path": ["api", "orders", "my-orders"],
               "query": [
                 {
                   "key": "search",
@@ -449,15 +394,9 @@
             "url": {
               "raw": "http://localhost:5000/api/orders/6988d169d87beeb328df7e9d",
               "protocol": "http",
-              "host": [
-                "localhost"
-              ],
+              "host": ["localhost"],
               "port": "5000",
-              "path": [
-                "api",
-                "orders",
-                "6988d169d87beeb328df7e9d"
-              ],
+              "path": ["api", "orders", "6988d169d87beeb328df7e9d"],
               "query": [
                 {
                   "key": "search",
@@ -488,9 +427,7 @@
         },
         "url": {
           "raw": "{{SEED_URL}}",
-          "host": [
-            "{{SEED_URL}}"
-          ]
+          "host": ["{{SEED_URL}}"]
         }
       },
       "response": []
@@ -503,9 +440,7 @@
         "type": "text/javascript",
         "packages": {},
         "requests": {},
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     },
     {
@@ -514,9 +449,7 @@
         "type": "text/javascript",
         "packages": {},
         "requests": {},
-        "exec": [
-          ""
-        ]
+        "exec": [""]
       }
     }
   ],
